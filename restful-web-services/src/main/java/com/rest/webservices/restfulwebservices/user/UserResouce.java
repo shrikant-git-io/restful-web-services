@@ -6,6 +6,11 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.mvc.ControllerLinkBuilder;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +28,8 @@ public class UserResouce {
 	@Autowired
 	private UserDaoService service;
 	
+
+	
 	
 	@GetMapping("/users")
 	public List<User> retriveAllUsers(){
@@ -30,13 +37,16 @@ public class UserResouce {
 		
 	}
 	@GetMapping("/users/{id}")
-	public User findOne(@PathVariable int id) {
+	public Resource<User> findOne(@PathVariable int id) {
 		User user = service.find(id);
 		if(user == null) {
 			throw new UserNotFoundException("id - " + id);
 		}
-		
-		return service.find(id);
+		//HATEOAS : if you want to add links to resource without hard coding them.
+		Resource<User> resource = new Resource<User>(user);
+		ControllerLinkBuilder linkTo = ControllerLinkBuilder.linkTo(methodOn(this.getClass()).retriveAllUsers());
+		resource.add(linkTo.withRel("links to all users"));
+		return resource;
 		
 	}
 	
