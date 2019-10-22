@@ -28,6 +28,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		<!-- basic API authentication, set basic auth while triggering request, credentials in property file -->
+		<!-- <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency> -->
 		<!-- api monitoring -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -62,7 +67,8 @@
 			<version>2.6.0</version>
 		</dependency>
 
-
+<!-- http://localhost:8080/h2-console/ , disable spring security -->
+<!-- JDBC URL: jdbc:h2:mem:testdb -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
